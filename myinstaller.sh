@@ -15,6 +15,8 @@ ARCH="all"
 TMP_DIR="/var/volatile/tmp"
 [ -d "$TMP_DIR" ] || TMP_DIR="/tmp"
 
+PLUGIN_PATH="/usr/lib/enigma2/python/Plugins/Extensions/NovalerDownloader"
+
 log() {
     echo "$1"
 }
@@ -44,10 +46,22 @@ log "[INFO] Target Package: $IPK_NAME"
 
 # 3. Check and Remove Existing Version
 log "[INFO] Checking for previous installations..."
+OLD_INSTALLED=0
+
 if opkg status "$PKG_BASE" 2>/dev/null | grep -q "^Status:.*installed"; then
-    log "   -> Old version detected. Uninstalling..."
+    log "   -> Old package version detected. Uninstalling via opkg..."
     opkg remove "$PKG_BASE" --force-depends >/dev/null 2>&1
-    log "   -> Uninstallation complete."
+    OLD_INSTALLED=1
+fi
+
+if [ -d "$PLUGIN_PATH" ]; then
+    log "   -> Old plugin directory detected. Removing..."
+    rm -rf "$PLUGIN_PATH"
+    OLD_INSTALLED=1
+fi
+
+if [ $OLD_INSTALLED -eq 1 ]; then
+    log "   -> Uninstallation of previous version complete."
 else
     log "   -> No previous version found."
 fi
