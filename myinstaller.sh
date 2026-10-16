@@ -2,7 +2,7 @@
 
 # =========================================================================
 # One-liner execution command:
-# wget -qO - https://raw.githubusercontent.com/popking159/novalerdownloader/main/installer.sh | /bin/sh
+# wget -qO - https://raw.githubusercontent.com/popking159/novalerdownloader/refs/heads/main/myinstaller.sh | /bin/sh
 # =========================================================================
 
 PLUGIN_NAME="NovalerDownloader"
