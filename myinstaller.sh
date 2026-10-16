@@ -42,11 +42,7 @@ TMP_FILE="$TMP_DIR/$IPK_NAME"
 
 log "[INFO] Target Package: $IPK_NAME"
 
-# 3. Update Package Feeds
-log "[INFO] Updating package feeds..."
-opkg update >/dev/null 2>&1 || log "[WARN] opkg update failed, attempting installation anyway..."
-
-# 4. Check and Remove Existing Version
+# 3. Check and Remove Existing Version
 log "[INFO] Checking for previous installations..."
 if opkg status "$PKG_BASE" 2>/dev/null | grep -q "^Status:.*installed"; then
     log "   -> Old version detected. Uninstalling..."
@@ -56,7 +52,7 @@ else
     log "   -> No previous version found."
 fi
 
-# 5. Check and Install Required Python 3 Dependencies
+# 4. Check and Install Required Python 3 Dependencies
 log "[INFO] Checking required dependencies for Python 3..."
 DEPS="python3-requests python3-beautifulsoup4 python3-urllib3"
 
@@ -69,7 +65,7 @@ for dep in $DEPS; do
     fi
 done
 
-# 6. Download IPK Archive
+# 5. Download IPK Archive
 log "[INFO] Downloading IPK package..."
 rm -f "$TMP_FILE"
 
@@ -85,7 +81,7 @@ if [ ! -s "$TMP_FILE" ] || grep -q -i "<html" "$TMP_FILE" || grep -q "404: Not F
     exit 1
 fi
 
-# 7. Install the IPK
+# 6. Install the IPK
 log "[INFO] Installing package..."
 opkg install --force-reinstall --force-overwrite "$TMP_FILE"
 
@@ -95,7 +91,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# 8. Cleanup and Finalize
+# 7. Cleanup and Finalize
 rm -f "$TMP_FILE"
 sync
 
