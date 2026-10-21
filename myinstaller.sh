@@ -7,7 +7,7 @@
 
 PLUGIN_NAME="NovalerDownloader"
 PKG_BASE="enigma2-plugin-extensions-novalerdownloader"
-VERSION="1.0"
+VERSION="1.1"
 USERNAME="popking159"
 REPO="novalerdownloader"
 ARCH="all"
